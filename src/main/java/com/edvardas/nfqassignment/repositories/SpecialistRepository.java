@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface SpecialistRepository extends JpaRepository<Specialist, Integer> {
 
     Optional<Specialist> findByName(String name);
+
+    Optional<Specialist> findByUsername(String username);
 }

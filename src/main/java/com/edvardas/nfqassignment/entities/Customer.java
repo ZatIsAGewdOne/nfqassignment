@@ -1,7 +1,9 @@
 package com.edvardas.nfqassignment.entities;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -21,7 +23,7 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column(name = "visit_id", unique = true)
@@ -32,6 +34,7 @@ public class Customer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialist")
+    @JsonManagedReference
     public Specialist specialist;
 
     public String role;
@@ -40,6 +43,7 @@ public class Customer {
     public boolean isActive;
 
     public Customer() {
+        registrationKey = "#" + Math.round((Math.random() * Integer.MAX_VALUE) + 1);
         creationDate = LocalDateTime.now();
         role = "CUSTOMER";
     }
